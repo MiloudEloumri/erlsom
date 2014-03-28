@@ -237,6 +237,12 @@ translateType(String) ->
        'qname';
     "boolean" ->
        'bool';
+    "positiveInteger" ->   %%added by HL;
+       'positiveInteger';
+    "decimal" ->
+       'decimal';   %%added by HL;
+    "double" ->
+       'double';
     _Else ->
        'char' 
   end.

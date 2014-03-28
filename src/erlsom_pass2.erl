@@ -276,8 +276,9 @@ translateType(Type = #typeInfo{elements=Elemts, restricts = Base, anyAttr = AnyA
 
 %% this corresponds with simple types. They don't have to be included in the model,
 %% since references will be replaced by {#PCDATA, ...} type.
-translateType(#typeInfo{typeType = simpleType}, _Types, _Info) ->
-  {[], noType};
+%% commented outby HL; keep simple types.
+%% translateType(#typeInfo{typeType = simpleType}, _Types, _Info) ->
+%%   {[], noType};
 
 translateType(#typeInfo{typeName=Name, typeRef=undefined,
                         typeType = TypeType,
@@ -405,7 +406,9 @@ translateAlternative(#alternative{tag=Tag, type=Type, real=Real, min=Min, max=Ma
     %% -record(typeInfo, {typeName, global, typeType, typeRef, elements, attributes}).
     {value, #typeInfo{typeRef="##string"}} ->
       %% debug("Tag " ++ Tag),
-      #alt{tag = list_to_atom(Tag), tp = list_to_type("##string"), rl = Real, mn = Min, mx = Max, anyInfo = AnyInfo};
+      %% changed by HL: not to replace reference.
+      %% #alt{tag = list_to_atom(Tag), tp = list_to_type("##string"), rl = Real, mn = Min, mx = Max, anyInfo = AnyInfo};
+          #alt{tag = list_to_atom(Tag), tp = list_to_type(Type), rl = Real, mn = Min, mx = Max, anyInfo = AnyInfo};
     {value, #typeInfo{typeType = globalElementRefOnly, typeRef=Ref, elements=undefined, attributes=[]}} ->
       %% (error reported by Alexander Wingard) this can also be a ref to a simple type (as above)
       Tp = case lists:keysearch(Ref, #typeInfo.typeName, Types) of
